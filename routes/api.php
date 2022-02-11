@@ -28,19 +28,17 @@ Route::get('/sliderroutapi', [slider_controller::class, 'sliderroutapi']);
 Route::get('/cataroutapi', [admin_controller::class, 'cataapi']);
 Route::get('/getitems', [items_controller::class, 'apiitems']);
 
-Route::post('/caproduct', [public_catagory::class, 'catitem']);
+
 
 Route::get('/apibrand', [public_catagory::class, 'brandroute']);
 
-
 Route::middleware(['auth:sanctum'])->group(function(){
 	Route::get('/data', [ApiloginController::class, 'routeabc']);    
-	Route::post('/logout', [ApiloginController::class, 'logout']);    
+	Route::post('/logout', [ApiloginController::class, 'logout']);
 });
 
 
-
-
+Route::post('/caproduct', [ApiloginController::class, 'catitem']);
 
 Route::post('/login', [ApiloginController::class, 'index']);
 

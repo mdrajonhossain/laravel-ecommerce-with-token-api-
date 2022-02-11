@@ -6,11 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\item; 
+use App\Models\catagori; 
 
 
 class ApiloginController extends Controller{
 
-    
+   
     public function index(Request $request){
 
         $email = $request->email;
@@ -20,7 +21,7 @@ class ApiloginController extends Controller{
             $token = Auth::user()->createToken($request->email)->plainTextToken;
             
             return response()->json([
-            	"message" => "Successfully",
+            	"message" => true,
             	"token" => $token,
             	"data" => Auth::user()],200);
         }
@@ -29,13 +30,21 @@ class ApiloginController extends Controller{
         }
     }
 
-    public function logout(){
+    public function logout(Request $request){        
         auth()->user()->tokens()->delete();
 
 
         return response()->json([
             "message" => "Logout Successfully!"
         ], 200);
+    }
+
+
+
+    public function catitem(Request $request){        
+        $id = catagori::where('slug', $request->slug)->first('id');
+        $flights = item::where("category_id", $id->id)->get();  
+        return response()->json($flights);
     }
 
 
